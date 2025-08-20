@@ -1459,3 +1459,24 @@ em {
 .footer::-webkit-scrollbar {
   display: none;
 }
+
+/* ==========================================================================
+   SCROLLBAR REMOVAL (Cross-browser, No colors forced)
+   ========================================================================== */
+
+/* For Chrome, Safari, Edge */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+  display: none !important;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: none !important;
+}
+
+/* For IE & Edge (legacy) */
+* {
+  -ms-overflow-style: none !important;
+}
