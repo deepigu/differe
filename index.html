@@ -25,8 +25,1392 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Enhanced CSS with Shape-Forming Particle System */
+        :root {
+          --primary-yellow: #FFD700;
+          --secondary-yellow: #FFB700;
+          --black: #000000;
+          --white: #ffffff;
+          --text-dark: #000000;
+          --text-light: rgba(255, 255, 255, 0.9);
+          --light-gray: #f8fafc;
+          --dark-gray: #333333;
+          
+          --primary-gradient: linear-gradient(135deg, var(--primary-yellow) 0%, var(--black) 100%);
+          --secondary-gradient: linear-gradient(135deg, var(--black) 0%, var(--primary-yellow) 100%);
+          --accent-gradient: linear-gradient(135deg, var(--primary-yellow) 0%, var(--black) 100%);
+          --cta-gradient: linear-gradient(45deg, var(--primary-yellow), var(--black));
+
+          --dark-bg: var(--black);
+          --darker-bg: #111111;
+          --light-bg: #fff8dc;
+          --accent-yellow: var(--primary-yellow);
+          --accent-blue: var(--black);
+          
+          --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          --font-size-xs: 0.75rem;
+          --font-size-sm: 0.875rem;
+          --font-size-base: 1rem;
+          --font-size-lg: 1.125rem;
+          --font-size-xl: 1.25rem;
+          --font-size-2xl: 1.5rem;
+          --font-size-3xl: 2rem;
+          --font-size-4xl: 2.5rem;
+          --font-size-5xl: 3.5rem;
+          
+          --font-weight-light: 300;
+          --font-weight-normal: 400;
+          --font-weight-medium: 500;
+          --font-weight-semibold: 600;
+          --font-weight-bold: 700;
+          --font-weight-extrabold: 800;
+          
+          --spacing-xs: 0.5rem;
+          --spacing-sm: 1rem;
+          --spacing-md: 1.5rem;
+          --spacing-lg: 2rem;
+          --spacing-xl: 3rem;
+          --spacing-2xl: 4rem;
+          --spacing-3xl: 5rem;
+          
+          --container-max-width: 1200px;
+          --border-radius-sm: 8px;
+          --border-radius-md: 12px;
+          --border-radius-lg: 20px;
+          --border-radius-full: 9999px;
+          
+          --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+          --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.1);
+          --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.1);
+          --shadow-xl: 0 25px 50px rgba(0, 0, 0, 0.15);
+          
+          --transition-fast: all 0.2s ease;
+          --transition-base: all 0.3s ease;
+          --transition-slow: all 0.6s ease;
+          
+          --z-header: 1000;
+          --z-modal: 2000;
+          --z-tooltip: 3000;
+        }
+
+        *, *::before, *::after {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+
+        html {
+          font-size: 16px;
+          scroll-behavior: smooth;
+          -webkit-text-size-adjust: 100%;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+
+        html::-webkit-scrollbar { display: none; }
+
+        body {
+          font-family: var(--font-family);
+          font-size: var(--font-size-base);
+          font-weight: var(--font-weight-normal);
+          line-height: 1.6;
+          color: var(--text-dark);
+          background-color: var(--white);
+          overflow-x: hidden;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+
+        body::-webkit-scrollbar { display: none; }
+
+        .skip-link {
+          position: absolute;
+          top: -40px;
+          left: 6px;
+          background: var(--text-dark);
+          color: var(--white);
+          padding: 8px;
+          text-decoration: none;
+          border-radius: 4px;
+          font-weight: var(--font-weight-medium);
+          z-index: var(--z-tooltip);
+          transition: var(--transition-fast);
+        }
+
+        .skip-link:focus { top: 6px; }
+
+        .sr-only {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border: 0;
+        }
+
+        *:focus {
+          outline: 2px solid var(--primary-yellow);
+          outline-offset: 2px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+          font-weight: var(--font-weight-bold);
+          line-height: 1.2;
+          margin-bottom: var(--spacing-sm);
+          color: inherit;
+        }
+
+        h1 { font-size: var(--font-size-5xl); font-weight: var(--font-weight-extrabold); }
+        h2 { font-size: var(--font-size-4xl); font-weight: var(--font-weight-bold); }
+        h3 { font-size: var(--font-size-2xl); font-weight: var(--font-weight-semibold); }
+        h4 { font-size: var(--font-size-xl); }
+        h5 { font-size: var(--font-size-lg); }
+        h6 { font-size: var(--font-size-base); }
+
+        p { margin-bottom: var(--spacing-sm); }
+
+        a {
+          color: var(--primary-yellow);
+          text-decoration: none;
+          transition: var(--transition-fast);
+        }
+
+        a:hover, a:focus { text-decoration: underline; }
+        strong { font-weight: var(--font-weight-semibold); }
+        em { font-style: italic; }
+        .highlight { color: var(--primary-yellow); }
+        .highlight-text { color: var(--primary-yellow); }
+
+        .container {
+          max-width: var(--container-max-width);
+          margin: 0 auto;
+          padding: 0 var(--spacing-sm);
+        }
+
+        @media (min-width: 768px) {
+          .container { padding: 0 var(--spacing-lg); }
+        }
+
+        .section__header {
+          text-align: center;
+          margin-bottom: var(--spacing-3xl);
+        }
+
+        .section__title {
+          position: relative;
+          margin-bottom: var(--spacing-md);
+        }
+
+        .section__divider {
+          width: 100px;
+          height: 4px;
+          background: var(--primary-gradient);
+          margin: var(--spacing-sm) auto 0;
+          border-radius: 2px;
+        }
+
+        .section__subtitle {
+          font-size: var(--font-size-lg);
+          color: var(--text-light);
+          font-weight: var(--font-weight-light);
+          margin-top: var(--spacing-md);
+        }
+
+        .cta-button {
+          display: inline-block;
+          background: var(--cta-gradient);
+          color: var(--white);
+          padding: var(--spacing-md) var(--spacing-2xl);
+          text-decoration: none;
+          border-radius: var(--border-radius-full);
+          font-size: var(--font-size-xl);
+          font-weight: var(--font-weight-semibold);
+          text-align: center;
+          border: none;
+          cursor: pointer;
+          position: relative;
+          overflow: hidden;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+        }
+
+        .cta-button::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+          transition: left 0.6s;
+        }
+
+        .cta-button:hover::before { left: 100%; }
+
+        .cta-button:hover, .cta-button:focus {
+          transform: translateY(-5px) scale(1.05);
+          box-shadow: 0 20px 50px rgba(255, 215, 0, 0.6);
+          text-decoration: none;
+        }
+
+        .cta-button:active { transform: translateY(-2px) scale(1.02); }
+
+        .cta-button i {
+          margin-left: 8px;
+          transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover i { transform: translateX(5px); }
+
+        /* Enhanced Header */
+        .header {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          background: var(--primary-gradient);
+          backdrop-filter: blur(20px);
+          z-index: var(--z-header);
+          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+          transform: translateY(-100%);
+          animation: slideDownHeader 1s ease-out 0.5s forwards;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header.scrolled {
+          background: rgba(0, 0, 0, 0.95);
+          border-bottom: 2px solid var(--primary-yellow);
+          backdrop-filter: blur(20px);
+          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: var(--spacing-sm) 0;
+          min-height: 70px;
+        }
+
+        .nav__brand { z-index: calc(var(--z-header) + 1); }
+
+        .nav__logo {
+          color: var(--white);
+          text-decoration: none;
+          display: block;
+        }
+
+        .nav__logo-text {
+          font-size: var(--font-size-3xl);
+          font-weight: var(--font-weight-extrabold);
+          background: linear-gradient(45deg, #fff, #f0f8ff);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .nav__menu {
+          display: flex;
+          list-style: none;
+          gap: var(--spacing-lg);
+          align-items: center;
+          margin: 0;
+          padding: 0;
+        }
+
+        .nav__link {
+          color: var(--white);
+          text-decoration: none;
+          font-weight: var(--font-weight-medium);
+          padding: var(--spacing-xs) var(--spacing-sm);
+          border-radius: var(--border-radius-full);
+          transition: all 0.3s ease;
+          position: relative;
+        }
+
+        .nav__link::before { display: none; }
+
+        .nav__link:hover, .nav__link:focus {
+          background: rgba(255, 255, 255, 0.15);
+          text-decoration: none;
+        }
+
+        .nav *:focus {
+          outline: 2px solid var(--primary-yellow);
+          outline-offset: 2px;
+        }
+
+        .nav__toggle {
+          display: none;
+          flex-direction: column;
+          justify-content: space-between;
+          width: 30px;
+          height: 21px;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          padding: 0;
+          z-index: calc(var(--z-header) + 1);
+        }
+
+        .nav__toggle-line {
+          display: block;
+          height: 3px;
+          width: 100%;
+          background: var(--white);
+          border-radius: 2px;
+          transition: var(--transition-base);
+        }
+
+        .nav__toggle[aria-expanded="true"] .nav__toggle-line:nth-child(1) {
+          transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .nav__toggle[aria-expanded="true"] .nav__toggle-line:nth-child(2) { opacity: 0; }
+
+        .nav__toggle[aria-expanded="true"] .nav__toggle-line:nth-child(3) {
+          transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Enhanced Hero Section with Shape-Forming Particles */
+        .hero {
+          position: relative;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          color: white;
+          background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+        }
+
+        .hero::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-image: 
+            linear-gradient(rgba(255, 215, 0, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 215, 0, 0.1) 1px, transparent 1px);
+          background-size: 100px 100px;
+          animation: gridMove 20s linear infinite;
+          opacity: 0.3;
+        }
+
+        /* Floating Dots Background */
+        .floating-dots {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          z-index: 1;
+          overflow: hidden;
+        }
+
+        .floating-dot {
+          position: absolute;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(255, 215, 0, 0.8) 0%, rgba(255, 215, 0, 0.4) 50%, rgba(255, 215, 0, 0.1) 100%);
+          animation: floatDot linear infinite;
+          opacity: 0;
+        }
+
+        .floating-dot.small {
+          width: 3px;
+          height: 3px;
+          animation-duration: 15s;
+        }
+
+        .floating-dot.medium {
+          width: 5px;
+          height: 5px;
+          animation-duration: 20s;
+        }
+
+        .floating-dot.large {
+          width: 8px;
+          height: 8px;
+          animation-duration: 25s;
+        }
+
+        .floating-dot.extra-large {
+          width: 12px;
+          height: 12px;
+          animation-duration: 30s;
+        }
+
+        /* Shape-Forming Particle System */
+        .particles-container {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        .shape-particle {
+          position: absolute;
+          border-radius: 50%;
+          pointer-events: none;
+          background: var(--primary-yellow);
+          box-shadow: 0 0 15px currentColor;
+          opacity: 0;
+        }
+
+        .shape-particle.active {
+          opacity: 1;
+          animation: particleGlow 3s ease-in-out infinite;
+        }
+
+        .shape-formation {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 400px;
+          height: 400px;
+          z-index: 2;
+          opacity: 0;
+        }
+
+        .shape-formation.visible {
+          opacity: 1;
+          animation: shapeReveal 2s ease-out forwards;
+        }
+
+        .formed-shape {
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          transition: opacity 1s ease;
+        }
+
+        .formed-shape.visible {
+          opacity: 1;
+          animation: shapeGlow 3s ease-in-out infinite;
+        }
+
+        /* Hero Content */
+        .hero__content {
+          position: relative;
+          z-index: 20;
+          text-align: center;
+          padding: 0 var(--spacing-sm);
+          max-width: 1200px;
+        }
+
+        .hero__tagline {
+          font-size: clamp(1.2rem, 3vw, 2rem);
+          margin-bottom: var(--spacing-sm);
+          font-weight: var(--font-weight-light);
+          opacity: 0;
+          transform: translateY(30px);
+          animation: fadeInUp 1s ease-out 1.8s forwards;
+        }
+
+        .hero__subtitle {
+          font-size: clamp(1rem, 2.5vw, 1.5rem);
+          margin-bottom: var(--spacing-2xl);
+          color: rgba(255, 255, 255, 0.8);
+          opacity: 0;
+          transform: translateY(30px);
+          animation: fadeInUp 1s ease-out 2.1s forwards;
+        }
+
+        .hero .cta-button {
+          opacity: 0;
+          transform: scale(0.8);
+          animation: buttonAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 2.5s forwards;
+        }
+
+        .typing-text {
+          display: inline-block;
+          border-right: 3px solid var(--primary-yellow);
+          animation: blink 1s step-end infinite;
+        }
+
+        /* Challenges Section */
+        .challenges {
+          padding: var(--spacing-3xl) 0;
+          background: linear-gradient(to bottom, var(--white), var(--light-gray));
+        }
+
+        .challenges__grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: var(--spacing-lg);
+          margin-bottom: var(--spacing-2xl);
+        }
+
+        .challenge-card {
+          background: var(--white);
+          border-radius: var(--border-radius-lg);
+          padding: var(--spacing-2xl);
+          text-align: center;
+          box-shadow: var(--shadow-lg);
+          transition: var(--transition-base);
+        }
+
+        .challenge-card:hover {
+          transform: translateY(-8px);
+          box-shadow: var(--shadow-xl);
+        }
+
+        .challenge-card__stat {
+          font-size: 4rem;
+          font-weight: var(--font-weight-extrabold);
+          color: var(--primary-yellow);
+          margin-bottom: var(--spacing-sm);
+          transition: var(--transition-base);
+        }
+
+        .challenge-card:hover .challenge-card__stat { transform: scale(1.1); }
+
+        .challenge-card__text {
+          font-size: var(--font-size-lg);
+          font-weight: var(--font-weight-medium);
+          color: var(--dark-gray);
+          margin: 0;
+        }
+
+        .challenges__footer {
+          background: var(--black);
+          border-radius: var(--border-radius-lg);
+          padding: var(--spacing-2xl);
+          text-align: center;
+          color: var(--white);
+        }
+
+        .challenges__footer p:first-child {
+          font-size: var(--font-size-lg);
+          margin-bottom: var(--spacing-sm);
+        }
+
+        .challenges__footer .highlight-text {
+          font-size: var(--font-size-xl);
+          font-weight: var(--font-weight-semibold);
+          margin: 0;
+        }
+
+        /* Animations */
+        @keyframes slideDownHeader {
+          from { transform: translateY(-100%); }
+          to { transform: translateY(0); }
+        }
+
+        @keyframes glow {
+          from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+          to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 215, 0, 0.5); }
+        }
+
+        @keyframes gridMove {
+          0% { transform: translate(0, 0); }
+          100% { transform: translate(100px, 100px); }
+        }
+
+        @keyframes floatDot {
+          0% {
+            transform: translateY(100vh) translateX(0) rotate(0deg);
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+          }
+          90% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-20vh) translateX(100px) rotate(360deg);
+            opacity: 0;
+          }
+        }
+
+        @keyframes fadeInUp {
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes buttonAppear {
+          to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes blink {
+          from, to { border-color: transparent; }
+          50% { border-color: var(--primary-yellow); }
+        }
+
+        @keyframes particleGlow {
+          0%, 100% { 
+            transform: scale(1); 
+            box-shadow: 0 0 15px var(--primary-yellow);
+          }
+          50% { 
+            transform: scale(1.2); 
+            box-shadow: 0 0 25px var(--primary-yellow), 0 0 35px rgba(255, 215, 0, 0.8);
+          }
+        }
+
+        @keyframes shapeReveal {
+          0% { 
+            opacity: 0; 
+            transform: translate(-50%, -50%) scale(0.5);
+          }
+          100% { 
+            opacity: 1; 
+            transform: translate(-50%, -50%) scale(1);
+          }
+        }
+
+        @keyframes shapeGlow {
+          0%, 100% { 
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
+          }
+          50% { 
+            filter: drop-shadow(0 0 40px rgba(255, 215, 0, 1)) drop-shadow(0 0 60px rgba(255, 215, 0, 0.8));
+          }
+        }
+
+        @keyframes particleFall {
+          0% {
+            transform: translateY(-100vh) translateX(0);
+            opacity: 0;
+          }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { opacity: 0.9; }
+        }
+
+        @keyframes joinShape {
+          0% { transform: scale(1); opacity: 1; }
+          100% { transform: scale(0.8); opacity: 0.9; }
+        }
+
+        .fade-in {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: var(--transition-slow);
+        }
+
+        .fade-in.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 768px) {
+          .nav__toggle { display: flex; }
+
+          .nav__menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: var(--spacing-xl);
+            transition: left 0.3s ease;
+          }
+
+          .nav__menu.active { left: 0; }
+
+          .nav__link {
+            font-size: var(--font-size-xl);
+            padding: var(--spacing-sm) var(--spacing-lg);
+          }
+
+          .nav__link:hover { background: rgba(255, 215, 0, 0.2); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+          :root {
+            --font-size-5xl: 3rem;
+            --font-size-4xl: 2rem;
+            --font-size-3xl: 1.5rem;
+          }
+
+          .challenges__grid { grid-template-columns: 1fr; }
+          .shape-formation { width: 300px; height: 300px; }
+        }
+
+        @media (max-width: 480px) {
+          .container { padding: 0 var(--spacing-sm); }
+          .challenge-card { padding: var(--spacing-sm); }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+          }
+
+          .fade-in { opacity: 1; transform: none; }
+          .hero__tagline, .hero__subtitle, .hero .cta-button { opacity: 1; transform: none; }
+        }
+		/* ==========================================================================
+   SOLUTIONS SECTION
+   ========================================================================== */
+
+.solutions {
+  padding: var(--spacing-3xl) 0;
+  background: var(--white);
+}
+
+.solutions__hero-image {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto var(--spacing-2xl);
+}
+
+.solutions__bg-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.solutions__hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, transparent 100%);
+  border-radius: var(--border-radius-lg);
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-2xl);
+}
+
+.solutions__hero-overlay p {
+  color: var(--white);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-light);
+  margin: 0;
+}
+
+.solutions__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.solution-card {
+  background: linear-gradient(135deg, var(--light-gray) 0%, var(--white) 100%);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-md);
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: var(--transition-base);
+}
+
+.solution-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+}
+
+.solution-card__icon {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(45deg, var(--primary-yellow), #ffeb3b);
+  border-radius: var(--border-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--spacing-sm);
+  transition: var(--transition-base);
+}
+
+.solution-card:hover .solution-card__icon {
+  transform: scale(1.1);
+}
+
+.solution-card__icon i {
+  font-size: var(--font-size-2xl);
+  color: var(--black);
+}
+
+.solution-card__title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--black);
+  margin-bottom: var(--spacing-sm);
+}
+
+.solution-card__text {
+  color: var(--dark-gray);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.solutions__visualization {
+  text-align: center;
+}
+
+.solutions__viz-image {
+  width: 100%;
+  max-width: 1000px;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ==========================================================================
+   ABOUT SECTION
+   ========================================================================== */
+
+.about {
+  padding: var(--spacing-3xl) 0;
+  background: linear-gradient(135deg, var(--light-gray) 0%, var(--white) 50%, var(--light-gray) 100%);
+}
+
+.about__content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-2xl);
+  align-items: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+@media (min-width: 1024px) {
+  .about__content {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.about__title {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  margin-bottom: var(--spacing-md);
+}
+
+.about__description {
+  font-size: var(--font-size-lg);
+  color: var(--dark-gray);
+  margin-bottom: var(--spacing-md);
+  line-height: 1.6;
+}
+
+.about__highlight {
+  background: var(--black);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-md);
+  color: var(--white);
+}
+
+.about__highlight-title {
+  color: var(--primary-yellow);
+  margin-bottom: var(--spacing-sm);
+}
+
+.about__quote {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-sm);
+  font-style: italic;
+}
+
+.about__team {
+  margin-bottom: var(--spacing-sm);
+}
+
+.about__motto {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm);
+}
+
+.about__motto p {
+  font-size: var(--font-size-sm);
+  font-style: italic;
+  margin: 0;
+}
+
+.about__image-container {
+  position: relative;
+    margin-top: -90px;
+   transform: translateY(-50px); /* moves the whole container up */
+}
+
+.about__image {
+  width: 100%;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.about__image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.3) 0%, transparent 100%);
+  border-radius: var(--border-radius-lg);
+}
+
+.about__float-icon {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: float1 6s ease-in-out infinite;
+}
+
+.about__float-icon--1 {
+  top: -16px;
+  right: -16px;
+  background: var(--primary-yellow);
+  color: var(--black);
+}
+
+.about__float-icon--2 {
+  bottom: -16px;
+  left: -16px;
+  background: var(--black);
+  color: var(--primary-yellow);
+  animation-delay: 2s;
+}
+
+.about__float-icon i {
+  font-size: var(--font-size-2xl);
+}
+
+.about__concepts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.about__concept-item {
+  position: relative;
+}
+
+.about__concept-image {
+  width: 100%;
+  height: 256px;
+  object-fit: cover;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.about__concept-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(0, 0, 0, 0.6) 100%);
+  border-radius: var(--border-radius-lg);
+  display: flex;
+  align-items: flex-end;
+  padding: var(--spacing-md);
+}
+
+.about__concept-overlay:nth-child(2) {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(255, 215, 0, 0.2) 100%);
+}
+
+.about__concept-overlay p {
+  color: var(--white);
+  font-weight: var(--font-weight-medium);
+  margin: 0;
+}
+
+/* ==========================================================================
+   CONTACT SECTION
+   ========================================================================== */
+
+.contact {
+  padding: var(--spacing-3xl) 0;
+  background: linear-gradient(135deg, var(--black) 0%, var(--dark-gray) 100%);
+  color: var(--white);
+}
+
+.contact .section__title {
+  color: var(--white);
+}
+
+.contact .section__subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contact__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-2xl);
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .contact__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.contact__form-container {
+  background: var(--white);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-xl);
+}
+
+.contact__form-title {
+  color: var(--black);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-md);
+}
+
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.form__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+  .form__row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.form__group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__label {
+  color: var(--dark-gray);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--spacing-xs);
+}
+
+.form__input {
+  padding: 12px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-base);
+  transition: var(--transition-base);
+}
+
+.form__input:focus {
+  outline: none;
+  border-color: var(--primary-yellow);
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+}
+
+.form__textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form__submit {
+  width: 100%;
+}
+
+.contact__info-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.contact__cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.contact__card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+}
+
+.contact__card-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--primary-yellow);
+  border-radius: var(--border-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.contact__card-icon i {
+  color: var(--black);
+  font-size: var(--font-size-lg);
+}
+
+.contact__card-title {
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: 4px;
+}
+
+.contact__card-text {
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+.contact__services {
+  padding: var(--spacing-md);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius-lg);
+  backdrop-filter: blur(10px);
+}
+
+.contact__services-title {
+  color: var(--primary-yellow);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-sm);
+}
+
+.contact__services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-sm);
+  text-align: center;
+}
+
+.contact__service i {
+  color: var(--primary-yellow);
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-xs);
+}
+
+.contact__service p {
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.footer {
+  background: var(--black);
+  color: var(--white);
+  padding: var(--spacing-lg) 0;
+  border-top: 1px solid var(--primary-yellow);
+}
+
+.footer__text {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+/* ==========================================================================
+   TOAST NOTIFICATIONS
+   ========================================================================== */
+
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--white);
+  color: var(--black);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-modal);
+  transform: translateX(100%);
+  opacity: 0;
+  transition: var(--transition-base);
+  max-width: 400px;
+}
+
+.toast.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.toast.success {
+  border-left: 4px solid #10b981;
+}
+
+.toast.error {
+  border-left: 4px solid #ef4444;
+}
+
+.success-message {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #10b981;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 2000;
+}
+
+.success-message.show {
+  transform: translateX(0);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  :root {
+    --font-size-5xl: 3rem;
+    --font-size-4xl: 2rem;
+    --font-size-3xl: 1.5rem;
+  }
+
+  .hero__title {
+    font-size: 3rem;
+  }
+
+  .challenges__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .solutions__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about__concepts {
+    grid-template-columns: 1fr;
+  }
+
+  .contact__services-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+
+  .form__row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 var(--spacing-sm);
+  }
+
+  .hero__title {
+    font-size: 2.5rem;
+  }
+
+  .challenge-card,
+  .solution-card {
+    padding: var(--spacing-sm);
+  }
+
+  .contact__form-container {
+    padding: var(--spacing-sm);
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .fade-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hero__title,
+  .hero__tagline,
+  .hero__subtitle,
+  .hero .cta-button {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   SCROLLBAR REMOVAL - NO GREEN COLOR
+   ========================================================================== */
+
+/* Remove any potential green colors from scrollbars across all elements */
+*,
+*::before,
+*::after {
+  /* Ensure no green colors can be applied */
+  scrollbar-color: var(--primary-yellow) var(--black) !important;
+}
+
+/* Additional scrollbar hiding for all containers */
+.container,
+.hero,
+.challenges,
+.solutions,
+.about,
+.contact,
+.footer {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.container::-webkit-scrollbar,
+.hero::-webkit-scrollbar,
+.challenges::-webkit-scrollbar,
+.solutions::-webkit-scrollbar,
+.about::-webkit-scrollbar,
+.contact::-webkit-scrollbar,
+.footer::-webkit-scrollbar {
+  display: none;
+}
+
+/* ==========================================================================
+   SCROLLBAR REMOVAL (Cross-browser, No colors forced)
+   ========================================================================== */
+
+/* For Chrome, Safari, Edge */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+  display: none !important;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: none !important;
+}
+
+/* For IE & Edge (legacy) */
+* {
+  -ms-overflow-style: none !important;
+}
+    </style>
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -34,6 +1418,9 @@
 <body>
     <!-- Skip to main content link for screen readers -->
     <a href="#main-content" class="skip-link" aria-label="Skip to main content">Skip to main content</a>
+
+    <!-- Floating Dots Background -->
+    <div class="floating-dots" id="floating-dots"></div>
 
     <!-- Header -->
     <header role="banner" class="header" id="header">
@@ -57,9 +1444,8 @@
             
             <ul class="nav__menu" id="nav-menu" role="menubar">
                 <li role="none"><a href="#home" role="menuitem" class="nav__link">Home</a></li>
-                
                 <li role="none"><a href="#solutions" role="menuitem" class="nav__link">Solutions</a></li>
-				<li role="none"><a href="#Why Knowledge-Graph " role="menuitem" class="nav__link">Why Knowledge-Graph</a></li>
+                <li role="none"><a href="#challenges" role="menuitem" class="nav__link">Why Knowledge-Graph</a></li>
                 <li role="none"><a href="#about" role="menuitem" class="nav__link">About</a></li>
                 <li role="none"><a href="#contact" role="menuitem" class="nav__link">Contact</a></li>
             </ul>
@@ -70,26 +1456,23 @@
     <main id="main-content" role="main">
         <!-- Hero Section -->
         <section id="home" class="hero" aria-labelledby="hero-title">
-            <!-- Animated Background Grid -->
-            <div class="hero__shapes">
-                <div class="shape shape-1"></div>
-                <div class="shape shape-2"></div>
-                <div class="shape shape-3"></div>
-                <div class="shape shape-4"></div>
-                <div class="shape shape-5"></div>
-            </div>
+            <!-- Shape-Forming Particle Container -->
+            <div class="particles-container" id="particles-container"></div>
             
-            <!-- Particle Container -->
-            <div class="particles" id="particles"></div>
+            <!-- Shape Formation Container -->
+            <div class="shape-formation" id="shape-formation">
+                <svg class="formed-shape" id="formed-shape" width="400" height="400" viewBox="0 0 400 400">
+                    <!-- Dynamic SVG shapes will be inserted here -->
+                </svg>
+            </div>
             
             <div class="container">
                 <div class="hero__content">
-                   <!-- <h1 id="hero-title" class="hero__title">CATALYST</h1> -->
-				   <p class="hero__subtitle">Affordable, Enterprise Intelligence Solutions builts on knowledge graphs of your business</p>
-                    <p class="hero__tagline">
-                        We help you <u> cultivate </u> the right insights from Your data so that you can be <span class="highlight typing-text" id="typing-text">Naturally Smart</span>, not just <em>Artificially Intelligent".</em>
+                    <p class="hero__tagline">Affordable, Enterprise Intelligence Solutions built on knowledge graphs of your business</p>
+                    <p class="hero__subtitle">
+                        We help you <u>cultivate</u> the right insights from Your data so that you can be <span class="highlight typing-text" id="typing-text">Naturally Smart</span>, not just <em>Artificially Intelligent</em>.
                     </p>
-                    
+                    <br>
                     <a href="#contact" class="cta-button" id="cta-button" aria-describedby="cta-description">
                         Get Started Today
                         <i class="fas fa-arrow-right"></i>
@@ -109,20 +1492,17 @@
                 
                 <div class="challenges__grid" role="list" aria-label="AI implementation challenges">
                     <div class="challenge-card fade-in" role="listitem">
-					 <h3>Nearly</h3>
-					 <h3 class="challenge-card__text">Nearly</h3>
+                        <h3>Only Above</h3>
                         <div class="challenge-card__stat" aria-label="25 percent">25%</div>
                         <p class="challenge-card__text">Limited yields from AI investments</p>
                     </div>
                     <div class="challenge-card fade-in" role="listitem">
-					 <h3>Above</h3>
-					 <h3 class="challenge-card__text">Above</h3>
+                        <h3>Above</h3>
                         <div class="challenge-card__stat" aria-label="40 percent">40%</div>
                         <p class="challenge-card__text">Agentic investments at risk of stalling by 2027</p>
                     </div>
                     <div class="challenge-card fade-in" role="listitem">
-					 <h3>Almost</h3>
-					 <h3 class="challenge-card__text">Almost</h3>
+                        <h3>Almost</h3>
                         <div class="challenge-card__stat" aria-label="65 percent">65%</div>
                         <p class="challenge-card__text">Enterprise AI solutions are point solutions</p>
                     </div>
@@ -133,9 +1513,8 @@
                     <p class="highlight-text"><strong>Successful implementations have prioritized value over quick wins</strong></p>
                 </div>
             </div>
-        </section>
-
-        <!-- Solutions Section -->
+			
+			 <!-- Solutions Section -->
         <section id="solutions" class="solutions" aria-labelledby="solutions-title">
             <div class="container">
                 <header class="section__header">
@@ -159,7 +1538,7 @@
                             <i class="fas fa-project-diagram"></i>
                         </div>
                         <h3 class="solution-card__title">Build & Operationalize Knowledge Graphs</h3>
-                        <p class="solution-card__text"style="background-color: black; color: white; padding: 10px; border-radius: 5px;" >At a fractional cost with <strong class="highlight">15% cost savings year-over-year</strong> compared to market rates</p>
+                        <p class="solution-card__text"style="color: black;" >At a fractional cost with <strong class="highlight">15% cost savings year-over-year</strong> compared to market rates</p>
                     </article>
                     
                     <article class="solution-card fade-in" role="listitem">
@@ -383,8 +1762,7 @@
             </div>
         </section>
     </main>
-
-    <!-- Footer -->
+<!-- Footer -->
     <footer class="footer">
         <div class="container">
             <p class="footer__text">
@@ -399,7 +1777,794 @@
 
     
     
-    <!-- JavaScript -->
-    <script src="scripts.js"></script>
+    <script>
+	
+        // Floating Dots Background System
+        class FloatingDotsBackground {
+            constructor() {
+                this.container = document.getElementById('floating-dots');
+                this.dots = [];
+                this.maxDots = 25;
+                this.isRunning = false;
+                
+                if (!this.container) return;
+                
+                // Respect user's motion preferences
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    this.maxDots = 5; // Fewer dots for reduced motion
+                }
+                
+                this.init();
+            }
+
+            init() {
+                this.isRunning = true;
+                this.createInitialDots();
+                this.startDotGeneration();
+            }
+
+            createInitialDots() {
+                // Create some initial dots at random positions
+                for (let i = 0; i < Math.floor(this.maxDots / 3); i++) {
+                    setTimeout(() => {
+                        if (this.isRunning) this.createDot();
+                    }, Math.random() * 3000);
+                }
+            }
+
+            startDotGeneration() {
+                this.dotInterval = setInterval(() => {
+                    if (this.dots.length < this.maxDots && this.isRunning) {
+                        this.createDot();
+                    }
+                }, 800 + Math.random() * 1200); // Every 0.8-2 seconds
+            }
+
+            createDot() {
+                const dot = document.createElement('div');
+                dot.className = 'floating-dot';
+                
+                // Random size class
+                const sizes = ['small', 'medium', 'large', 'extra-large'];
+                const weights = [0.4, 0.3, 0.2, 0.1]; // Higher probability for smaller dots
+                const sizeClass = this.weightedRandom(sizes, weights);
+                dot.classList.add(sizeClass);
+                
+                // Random horizontal position
+                const startX = Math.random() * window.innerWidth;
+                dot.style.left = startX + 'px';
+                
+                // Random horizontal drift
+                const driftX = (Math.random() - 0.5) * 200;
+                dot.style.setProperty('--drift-x', driftX + 'px');
+                
+                // Slight variation in animation duration
+                const baseDuration = this.getBaseDuration(sizeClass);
+                const variation = (Math.random() - 0.5) * 0.3; // ±30% variation
+                const finalDuration = baseDuration * (1 + variation);
+                dot.style.animationDuration = finalDuration + 's';
+                
+                // Random delay before starting
+                const delay = Math.random() * 2;
+                dot.style.animationDelay = delay + 's';
+                
+                // Add some color variation
+                const colorVariations = [
+                    'rgba(255, 215, 0, 0.8)', // Gold
+                    'rgba(255, 255, 255, 0.6)', // White
+                    'rgba(255, 183, 0, 0.7)', // Darker gold
+                    'rgba(255, 235, 59, 0.5)'  // Light gold
+                ];
+                const color = colorVariations[Math.floor(Math.random() * colorVariations.length)];
+                dot.style.background = `radial-gradient(circle, ${color} 0%, ${color.replace(/[\d\.]+\)$/g, '0.2)')} 50%, transparent 100%)`;
+                
+                this.container.appendChild(dot);
+                this.dots.push(dot);
+                
+                // Remove dot after animation completes
+                setTimeout(() => {
+                    this.removeDot(dot);
+                }, (finalDuration + delay) * 1000);
+            }
+
+            getBaseDuration(sizeClass) {
+                const durations = {
+                    'small': 15,
+                    'medium': 20,
+                    'large': 25,
+                    'extra-large': 30
+                };
+                return durations[sizeClass] || 20;
+            }
+
+            weightedRandom(items, weights) {
+                let sum = weights.reduce((a, b) => a + b, 0);
+                let random = Math.random() * sum;
+                
+                for (let i = 0; i < items.length; i++) {
+                    random -= weights[i];
+                    if (random <= 0) {
+                        return items[i];
+                    }
+                }
+                return items[items.length - 1];
+            }
+
+            removeDot(dot) {
+                if (dot && dot.parentNode) {
+                    dot.parentNode.removeChild(dot);
+                    const index = this.dots.indexOf(dot);
+                    if (index > -1) {
+                        this.dots.splice(index, 1);
+                    }
+                }
+            }
+
+            destroy() {
+                this.isRunning = false;
+                if (this.dotInterval) {
+                    clearInterval(this.dotInterval);
+                }
+                this.dots.forEach(dot => this.removeDot(dot));
+                this.dots = [];
+            }
+        }
+
+        // Enhanced Shape-Forming Particle System
+        class ShapeFormingParticleSystem {
+            constructor() {
+                this.container = document.getElementById('particles-container');
+                this.shapeContainer = document.getElementById('shape-formation');
+                this.formedShapeSVG = document.getElementById('formed-shape');
+                this.particles = [];
+                this.isAnimating = false;
+                
+                // Define shapes with their particle positions and SVG paths
+                this.shapes = [
+                    {
+                        name: 'heart',
+                        positions: [
+                            {x: 200, y: 120}, {x: 180, y: 100}, {x: 220, y: 100},
+                            {x: 160, y: 110}, {x: 240, y: 110}, {x: 150, y: 130},
+                            {x: 250, y: 130}, {x: 160, y: 150}, {x: 240, y: 150},
+                            {x: 170, y: 170}, {x: 230, y: 170}, {x: 180, y: 190},
+                            {x: 220, y: 190}, {x: 190, y: 210}, {x: 210, y: 210},
+                            {x: 200, y: 230}, {x: 175, y: 120}, {x: 225, y: 120}
+                        ],
+                        svg: `<path d="M200,300 C200,300 120,200 120,150 C120,125 145,100 170,100 C195,100 200,125 200,150 C200,125 205,100 230,100 C255,100 280,125 280,150 C280,200 200,300 200,300 Z" 
+                              fill="none" 
+                              stroke="#FFD700" 
+                              stroke-width="4" 
+                              stroke-dasharray="8,8">
+                              <animate attributeName="stroke-dashoffset" values="0;-16" dur="2s" repeatCount="indefinite"/>
+                              </path>`
+                    },
+                    {
+                        name: 'circle',
+                        positions: Array.from({length: 24}, (_, i) => {
+                            const angle = (i / 24) * 2 * Math.PI;
+                            return {
+                                x: 200 + 90 * Math.cos(angle),
+                                y: 200 + 90 * Math.sin(angle)
+                            };
+                        }),
+                        svg: `<circle cx="200" cy="200" r="90" 
+                              fill="none" 
+                              stroke="#FFD700" 
+                              stroke-width="4" 
+                              stroke-dasharray="8,8">
+                              <animate attributeName="stroke-dashoffset" values="0;-16" dur="2s" repeatCount="indefinite"/>
+                              </circle>`
+                    },
+                    {
+                        name: 'star',
+                        positions: [
+                            {x: 200, y: 80}, {x: 210, y: 130}, {x: 260, y: 130},
+                            {x: 220, y: 170}, {x: 240, y: 220}, {x: 200, y: 190},
+                            {x: 160, y: 220}, {x: 180, y: 170}, {x: 140, y: 130},
+                            {x: 190, y: 130}, {x: 215, y: 105}, {x: 185, y: 105},
+                            {x: 235, y: 150}, {x: 165, y: 150}, {x: 225, y: 195},
+                            {x: 175, y: 195}, {x: 200, y: 240}, {x: 200, y: 260}
+                        ],
+                        svg: `<path d="M200,80 L213,130 L270,130 L225,165 L238,215 L200,185 L162,215 L175,165 L130,130 L187,130 Z"
+                              fill="none" 
+                              stroke="#FFD700" 
+                              stroke-width="4" 
+                              stroke-dasharray="8,8">
+                              <animate attributeName="stroke-dashoffset" values="0;-16" dur="2s" repeatCount="indefinite"/>
+                              </path>`
+                    },
+                    {
+                        name: 'diamond',
+                        positions: [
+                            {x: 200, y: 100}, {x: 180, y: 120}, {x: 220, y: 120},
+                            {x: 160, y: 140}, {x: 240, y: 140}, {x: 140, y: 160},
+                            {x: 260, y: 160}, {x: 120, y: 180}, {x: 280, y: 180},
+                            {x: 140, y: 200}, {x: 260, y: 200}, {x: 160, y: 220},
+                            {x: 240, y: 220}, {x: 180, y: 240}, {x: 220, y: 240},
+                            {x: 200, y: 260}, {x: 200, y: 280}, {x: 200, y: 300}
+                        ],
+                        svg: `<path d="M200,100 L280,200 L200,300 L120,200 Z"
+                              fill="none" 
+                              stroke="#FFD700" 
+                              stroke-width="4" 
+                              stroke-dasharray="8,8">
+                              <animate attributeName="stroke-dashoffset" values="0;-16" dur="2s" repeatCount="indefinite"/>
+                              </path>`
+                    },
+                    {
+                        name: 'spiral',
+                        positions: Array.from({length: 20}, (_, i) => {
+                            const angle = (i / 20) * 6 * Math.PI;
+                            const radius = 20 + (i / 20) * 70;
+                            return {
+                                x: 200 + radius * Math.cos(angle),
+                                y: 200 + radius * Math.sin(angle)
+                            };
+                        }),
+                        svg: `<path d="M200,200 Q180,180 160,200 Q140,220 160,240 Q180,260 200,240 Q220,220 240,240 Q260,260 280,240 Q300,220 280,200 Q260,180 240,160 Q220,140 200,160 Q180,180 160,140"
+                              fill="none" 
+                              stroke="#FFD700" 
+                              stroke-width="4" 
+                              stroke-dasharray="8,8">
+                              <animate attributeName="stroke-dashoffset" values="0;-16" dur="2s" repeatCount="indefinite"/>
+                              </path>`
+                    }
+                ];
+                
+                this.currentShapeIndex = 0;
+                this.animationCycle = 0;
+                
+                this.init();
+            }
+
+            init() {
+                this.startAnimationLoop();
+            }
+
+            startAnimationLoop() {
+                if (this.isAnimating) return;
+                
+                this.isAnimating = true;
+                this.animateCurrentShape();
+            }
+
+            animateCurrentShape() {
+                const currentShape = this.shapes[this.currentShapeIndex];
+                
+                // Clear previous particles
+                this.clearParticles();
+                
+                // Hide shape formation initially
+                this.shapeContainer.classList.remove('visible');
+                this.formedShapeSVG.querySelector('.formed-shape')?.classList.remove('visible');
+                
+                // Start particle creation with staggered timing
+                this.createParticlesForShape(currentShape);
+                
+                // After particles form shape, show SVG and then move to next shape
+                setTimeout(() => {
+                    this.revealFormedShape(currentShape);
+                    
+                    setTimeout(() => {
+                        this.fadeOutCurrentShape();
+                        
+                        setTimeout(() => {
+                            this.moveToNextShape();
+                        }, 2000);
+                    }, 3000);
+                }, 4000);
+            }
+
+            createParticlesForShape(shape) {
+                const positions = shape.positions;
+                
+                positions.forEach((target, index) => {
+                    setTimeout(() => {
+                        this.createAndAnimateParticle(target, index);
+                    }, index * 100 + Math.random() * 200);
+                });
+
+                // Create some additional random particles for visual effect
+                for (let i = 0; i < 12; i++) {
+                    setTimeout(() => {
+                        const randomTargetIndex = Math.floor(Math.random() * positions.length);
+                        this.createAndAnimateParticle(positions[randomTargetIndex], -1);
+                    }, Math.random() * 2000 + 500);
+                }
+            }
+
+            createAndAnimateParticle(target, index) {
+                const particle = document.createElement('div');
+                particle.className = 'shape-particle';
+                
+                // Random starting position from edges of screen
+                const startSide = Math.floor(Math.random() * 4);
+                let startX, startY;
+                
+                switch(startSide) {
+                    case 0: // top
+                        startX = Math.random() * window.innerWidth;
+                        startY = -20;
+                        break;
+                    case 1: // right
+                        startX = window.innerWidth + 20;
+                        startY = Math.random() * window.innerHeight;
+                        break;
+                    case 2: // bottom
+                        startX = Math.random() * window.innerWidth;
+                        startY = window.innerHeight + 20;
+                        break;
+                    case 3: // left
+                        startX = -20;
+                        startY = Math.random() * window.innerHeight;
+                        break;
+                }
+                
+                // Particle properties
+                const size = Math.random() * 8 + 4; // 4-12px
+                const colors = ['#FFD700', '#FFF', '#FFB700', '#FFEB3B'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Get target position relative to viewport
+                const shapeRect = this.shapeContainer.getBoundingClientRect();
+                const targetX = shapeRect.left + target.x - 200; // Adjust for shape center
+                const targetY = shapeRect.top + target.y - 200;
+                
+                particle.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: ${color};
+                    left: ${startX}px;
+                    top: ${startY}px;
+                    z-index: 5;
+                `;
+                
+                this.container.appendChild(particle);
+                this.particles.push(particle);
+                
+                // Animate particle to target
+                this.animateParticleToTarget(particle, startX, startY, targetX, targetY);
+            }
+
+            animateParticleToTarget(particle, startX, startY, targetX, targetY) {
+                const duration = 2000 + Math.random() * 1500;
+                
+                // Add intermediate waypoints for more natural movement
+                const midX = (startX + targetX) / 2 + (Math.random() - 0.5) * 200;
+                const midY = (startY + targetY) / 2 + (Math.random() - 0.5) * 200;
+                
+                const animation = particle.animate([
+                    {
+                        transform: `translate(0, 0)`,
+                        opacity: 0
+                    },
+                    {
+                        transform: `translate(${(midX - startX) * 0.3}px, ${(midY - startY) * 0.3}px)`,
+                        opacity: 1,
+                        offset: 0.15
+                    },
+                    {
+                        transform: `translate(${midX - startX}px, ${midY - startY}px)`,
+                        opacity: 1,
+                        offset: 0.5
+                    },
+                    {
+                        transform: `translate(${(targetX - startX) * 0.9}px, ${(targetY - startY) * 0.9}px)`,
+                        opacity: 1,
+                        offset: 0.85
+                    },
+                    {
+                        transform: `translate(${targetX - startX}px, ${targetY - startY}px)`,
+                        opacity: 0.9
+                    }
+                ], {
+                    duration: duration,
+                    easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+                    fill: 'forwards'
+                });
+                
+                animation.addEventListener('finish', () => {
+                    particle.classList.add('active');
+                    this.joinParticleToShape(particle);
+                });
+            }
+
+            joinParticleToShape(particle) {
+                const joinAnimation = particle.animate([
+                    {
+                        transform: particle.style.transform + ' scale(1)',
+                        opacity: 0.9
+                    },
+                    {
+                        transform: particle.style.transform + ' scale(1.2)',
+                        opacity: 1,
+                        filter: 'drop-shadow(0 0 15px #FFD700)'
+                    },
+                    {
+                        transform: particle.style.transform + ' scale(0.9)',
+                        opacity: 0.8
+                    }
+                ], {
+                    duration: 800,
+                    easing: 'ease-out',
+                    fill: 'forwards'
+                });
+            }
+
+            revealFormedShape(shape) {
+                // Update SVG content
+                this.formedShapeSVG.innerHTML = `
+                    ${shape.svg}
+                    <defs>
+                        <radialGradient id="glowGradient">
+                            <stop offset="0%" stop-color="#FFD700" stop-opacity="0.8"/>
+                            <stop offset="100%" stop-color="#FFD700" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+                    <circle cx="200" cy="200" r="150" fill="none" stroke="url(#glowGradient)" stroke-width="2" opacity="0.3"/>
+                `;
+                
+                // Show shape formation
+                this.shapeContainer.classList.add('visible');
+                
+                setTimeout(() => {
+                    this.formedShapeSVG.classList.add('visible');
+                }, 300);
+            }
+
+            fadeOutCurrentShape() {
+                // Fade out particles
+                this.particles.forEach((particle, index) => {
+                    setTimeout(() => {
+                        const fadeAnimation = particle.animate([
+                            { 
+                                opacity: particle.style.opacity || 0.8,
+                                transform: particle.style.transform + ' scale(1)'
+                            },
+                            { 
+                                opacity: 0, 
+                                transform: particle.style.transform + ' scale(0.3)'
+                            }
+                        ], {
+                            duration: 1000,
+                            easing: 'ease-out',
+                            fill: 'forwards'
+                        });
+                    }, index * 30);
+                });
+                
+                // Fade out SVG shape
+                this.formedShapeSVG.classList.remove('visible');
+                this.shapeContainer.classList.remove('visible');
+            }
+
+            clearParticles() {
+                this.particles.forEach(particle => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                });
+                this.particles = [];
+            }
+
+            moveToNextShape() {
+                this.currentShapeIndex = (this.currentShapeIndex + 1) % this.shapes.length;
+                this.animationCycle++;
+                
+                // Continue the loop
+                setTimeout(() => {
+                    this.animateCurrentShape();
+                }, 1000);
+            }
+
+            destroy() {
+                this.isAnimating = false;
+                this.clearParticles();
+            }
+        }
+
+        // Enhanced Mobile Navigation
+        class MobileNavigation {
+            constructor() {
+                this.toggle = document.querySelector('.nav__toggle');
+                this.menu = document.querySelector('.nav__menu');
+                this.links = document.querySelectorAll('.nav__link');
+                this.isOpen = false;
+                this.init();
+            }
+
+            init() {
+                if (!this.toggle || !this.menu) return;
+                this.bindEvents();
+            }
+
+            bindEvents() {
+                this.toggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.toggleMenu();
+                });
+
+                this.links.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (this.isOpen) this.closeMenu();
+                    });
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (this.isOpen && !this.menu.contains(e.target) && !this.toggle.contains(e.target)) {
+                        this.closeMenu();
+                    }
+                });
+
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && this.isOpen) {
+                        this.closeMenu();
+                        this.toggle.focus();
+                    }
+                });
+
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth > 768 && this.isOpen) {
+                        this.closeMenu();
+                    }
+                });
+            }
+
+            toggleMenu() {
+                if (this.isOpen) {
+                    this.closeMenu();
+                } else {
+                    this.openMenu();
+                }
+            }
+
+            openMenu() {
+                this.isOpen = true;
+                this.menu.classList.add('active');
+                this.toggle.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            }
+
+            closeMenu() {
+                this.isOpen = false;
+                this.menu.classList.remove('active');
+                this.toggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Enhanced Typing Effect
+        class TypingEffect {
+            constructor(element, texts, options = {}) {
+                this.element = element;
+                this.texts = texts;
+                this.options = {
+                    speed: options.speed || 150,
+                    deleteSpeed: options.deleteSpeed || 75,
+                    pauseTime: options.pauseTime || 2000
+                };
+                
+                this.textIndex = 0;
+                this.charIndex = 0;
+                this.isDeleting = false;
+                this.isPaused = false;
+                
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    this.element.textContent = this.texts[0];
+                    return;
+                }
+                
+                this.type();
+            }
+
+            type() {
+                if (this.isPaused) return;
+                
+                const currentText = this.texts[this.textIndex];
+                
+                if (this.isDeleting) {
+                    this.element.textContent = currentText.substring(0, this.charIndex - 1);
+                    this.charIndex--;
+                } else {
+                    this.element.textContent = currentText.substring(0, this.charIndex + 1);
+                    this.charIndex++;
+                }
+
+                let typeSpeed = this.isDeleting ? this.options.deleteSpeed : this.options.speed;
+
+                if (!this.isDeleting && this.charIndex === currentText.length) {
+                    typeSpeed = this.options.pauseTime;
+                    this.isDeleting = true;
+                } else if (this.isDeleting && this.charIndex === 0) {
+                    this.isDeleting = false;
+                    this.textIndex = (this.textIndex + 1) % this.texts.length;
+                    typeSpeed = 500;
+                }
+
+                setTimeout(() => this.type(), typeSpeed);
+            }
+        }
+
+        // Header Scroll Effects
+        class HeaderScrollEffects {
+            constructor() {
+                this.header = document.querySelector('.header');
+                this.lastScrollTop = 0;
+                this.isScrolled = false;
+                this.init();
+            }
+
+            init() {
+                if (!this.header) return;
+                this.bindEvents();
+            }
+
+            bindEvents() {
+                const handleScroll = () => {
+                    this.updateHeader();
+                };
+                
+                let ticking = false;
+                window.addEventListener('scroll', () => {
+                    if (!ticking) {
+                        requestAnimationFrame(() => {
+                            handleScroll();
+                            ticking = false;
+                        });
+                        ticking = true;
+                    }
+                }, { passive: true });
+            }
+
+            updateHeader() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+                
+                if (scrollTop > 100 && !this.isScrolled) {
+                    this.header.classList.add('scrolled');
+                    this.isScrolled = true;
+                } else if (scrollTop <= 100 && this.isScrolled) {
+                    this.header.classList.remove('scrolled');
+                    this.isScrolled = false;
+                }
+
+                this.lastScrollTop = scrollTop;
+            }
+        }
+
+        // Scroll Animations
+        class ScrollAnimations {
+            constructor() {
+                this.elements = document.querySelectorAll('.fade-in');
+                this.observer = null;
+                this.init();
+            }
+
+            init() {
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    this.elements.forEach(el => el.classList.add('visible'));
+                    return;
+                }
+
+                this.setupIntersectionObserver();
+            }
+
+            setupIntersectionObserver() {
+                const options = {
+                    root: null,
+                    rootMargin: '0px 0px -50px 0px',
+                    threshold: 0.1
+                };
+
+                this.observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            this.observer.unobserve(entry.target);
+                        }
+                    });
+                }, options);
+
+                this.elements.forEach(el => {
+                    this.observer.observe(el);
+                });
+            }
+
+            destroy() {
+                if (this.observer) {
+                    this.observer.disconnect();
+                }
+            }
+        }
+
+        // Application Initialization
+        class CatalystApp {
+            constructor() {
+                this.components = {};
+                this.init();
+            }
+
+            init() {
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', () => {
+                        this.initializeComponents();
+                    });
+                } else {
+                    this.initializeComponents();
+                }
+            }
+
+            initializeComponents() {
+                try {
+                    // Initialize core components
+                    this.components.mobileNavigation = new MobileNavigation();
+                    this.components.headerScrollEffects = new HeaderScrollEffects();
+                    this.components.scrollAnimations = new ScrollAnimations();
+
+                    // Initialize floating dots background
+                    this.components.floatingDots = new FloatingDotsBackground();
+
+                    // Initialize shape-forming particle system
+                    setTimeout(() => {
+                        this.components.shapeFormingParticles = new ShapeFormingParticleSystem();
+                    }, 2000);
+
+                    // Initialize typing effect
+                    setTimeout(() => {
+                        this.initializeTypingEffect();
+                    }, 3000);
+
+                    // Mark app as loaded
+                    document.body.classList.add('loaded');
+
+                    console.log('🚀 Catalyst Enterprise Intelligence - Enhanced Landing Page with Floating Dots & Shape-Forming Particles Loaded!');
+                } catch (error) {
+                    console.error('Error initializing Catalyst app:', error);
+                }
+            }
+
+            initializeTypingEffect() {
+                const typingElement = document.getElementById('typing-text');
+                if (!typingElement) return;
+
+                const texts = [
+                    'Naturally Smart',
+                    'Naturally Smart',
+                    'Naturally Smart',
+                    'Naturally Smart'
+                ];
+                
+                this.components.typingEffect = new TypingEffect(typingElement, texts);
+            }
+
+            destroy() {
+                Object.keys(this.components).forEach(key => {
+                    const component = this.components[key];
+                    if (component && typeof component.destroy === 'function') {
+                        component.destroy();
+                    }
+                });
+            }
+        }
+
+        // Error Handling
+        window.addEventListener('error', (e) => {
+            console.error('JavaScript Error:', e.error);
+        });
+
+        window.addEventListener('unhandledrejection', (e) => {
+            console.error('Unhandled Promise Rejection:', e.reason);
+        });
+
+        // Initialize Application
+        window.CatalystApp = new CatalystApp();
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (window.CatalystApp && typeof window.CatalystApp.destroy === 'function') {
+                window.CatalystApp.destroy();
+            }
+        });
+    </script>
 </body>
 </html>
